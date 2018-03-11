@@ -29,6 +29,11 @@ void setup() {
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
   pinMode(6, INPUT_PULLUP);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A4, INPUT);
 }
 
 unsigned long loopstart = 0;
@@ -255,4 +260,3 @@ void reset() {
   pixelNumberp2;
   spood = 0.07;
 }
-
