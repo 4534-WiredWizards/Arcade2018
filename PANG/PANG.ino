@@ -5,7 +5,19 @@
  #define PSTR // Make Arduino Due happy
 #endif
 
-#define PIN 6
+#define PIN 9
+#define ONE_LEFT 5
+#define ONE_UP 4
+#define ONE_RIGHT 3
+#define ONE_DOWN 2
+#define ONE_FIRE 6
+#define TWO_LEFT 3
+#define TWO_UP 2
+#define TWO_RIGHT 1
+#define TWO_DOWN 4
+#define TWO_FIRE 0
+#define RESTART 7
+#define SELECT_GAME 8
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(16, 16, PIN,
   NEO_MATRIX_TOP     + NEO_MATRIX_LEFT +
   NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG,
@@ -29,20 +41,46 @@ void setup() {
   pinMode(7, INPUT_PULLUP);
 }
 int w = matrix.width();
-double cursory = matrix.width();
+double cursorxtop = matrix.width();
+double cursorxbot = matrix.width();
 double p1 = 0;
 double p2 = 0;
 unsigned long loopstart = 0;
-double ballxmovement = .2;
-double ballymovement = 0;
+double ballxmovement = .1;
+double ballymovement = .1;
 double ballx = 7;
 double bally = 7;
 double ballmaxychange = .1;
 bool gameover = false;
 double AA = 1;
+double cycle = 0;
 //uint16_t color[] = {
 //  matrix.Color(255,255,255),};
 void loop() {
+//  Serial.println("one left");
+//  Serial.println(digitalRead(ONE_LEFT));
+//  Serial.println("one right");
+//  Serial.println(digitalRead(ONE_RIGHT));
+//  Serial.println("one up");
+//  Serial.println(digitalRead(ONE_UP));
+//  Serial.println("one down");
+//  Serial.println(digitalRead(ONE_DOWN));
+//  Serial.println("one fire");
+//  Serial.println(digitalRead(ONE_FIRE));
+//  Serial.println("two up");
+//  Serial.println(analogRead(TWO_UP));
+//  Serial.println("two left");
+//  Serial.println(analogRead(TWO_LEFT));
+//  Serial.println("two down");
+//  Serial.println(analogRead(TWO_DOWN));
+//  Serial.println("two right");
+//  Serial.println(analogRead(TWO_RIGHT));
+//  Serial.println("two fire");
+//  Serial.println(analogRead(TWO_FIRE));
+//  Serial.println("restart");
+//  Serial.println(digitalRead(RESTART));
+//  Serial.println("select game");
+//  Serial.println(digitalRead(SELECT_GAME));
   loopstart = micros();
   matrix.fillScreen(0);
   // put your main code here, to run repeatedly:
@@ -50,7 +88,7 @@ void loop() {
     for(int i = 0; i < 1 ; i++){
       ballx = ballx + ballxmovement;
       bally = bally + ballymovement;
-      matrix.drawPixel(ballx,bally,matrix.Color(0,255,0));
+//      matrix.drawPixel(ballx,bally,matrix.Color(0,255,0));
       if(ballx < 0 && (abs((p1+2) - bally)) <= 2){
         ballxmovement = -ballxmovement;
         if(ballymovement < 0){
@@ -86,15 +124,15 @@ void loop() {
         matrix.drawPixel(x,y,matrix.Color(255*AA,255*AA,255*AA));
       }
     }
-    if( digitalRead(2)== false && p1 < 12){
+    if( digitalRead(ONE_DOWN) == false && p1 < 12){
       p1 = p1+.4;
-    }else if(digitalRead(3) == false && p1 > 0){
+    }else if( digitalRead(ONE_UP) == false && p1 > 0){
       p1 = p1-.4;
     }
     //matrix.drawFastVLine(0,p1,4,colors[0]);
-    if( digitalRead(4)== false && p2 < 12){
+    if( analogRead(TWO_DOWN) == 0 && p2 < 12){
       p2 = p2+.4;
-    }else if(digitalRead(5) == false && p2 > 0){
+    }else if( analogRead(TWO_UP) == 0 && p2 > 0){
       p2 = p2-.4;
     }
     //matrix.drawFastVLine(15,p2,4,colors[0]);
@@ -105,8 +143,8 @@ void loop() {
         matrix.drawPixel(15,p2+(i-4),matrix.Color(255,255,255));
       }
     }
-    Serial.println((delaytime - (micros() - loopstart)));
-    Serial.println(delaytime);
+//    Serial.println((delaytime - (micros() - loopstart)));
+//    Serial.println(delaytime);
     if(delaytime > micros() - loopstart){
       delayMicroseconds(delaytime - (micros() - loopstart));
     }
@@ -116,19 +154,37 @@ void loop() {
       gameover = false;
       ballx = 7;
       bally = 7;
-      ballymovement = .1;
+      ballymovement = random(-1,1)/10.0;
       ballxmovement = .1;
-      cursory = w;
+      cursorxtop = w;
     }
-    matrix.setCursor(cursory,0);
-    matrix.print(F("Game Over"));
+    if(cycle == 0){
+      matrix.setCursor(cursorxtop,0);
+      matrix.print(F("Game Over"));
+      matrix.setTextColor(matrix.Color(255,0,0));
+      cursorxtop = cursorxtop - .1;
+    if(cursorxtop < -53){
+      cursorxtop = w;
+      cycle++;
+    }
     matrix.show();
-    matrix.setTextColor(matrix.Color(255,0,0));
-    cursory = cursory - .1;
-    if(cursory < -53){
-      cursory = w;
-//      color[0] = matrix.color(random(255),random(255),random(255));
+    }else{
+      matrix.print(F("Wired Wizards Wired Wizards"));
+      matrix.setTextColor(matrix.Color(255,255,255));
+      cursorxtop = cursorxtop - .15;
+      if(cursorxtop < -30){
+         cursorxtop = 0;
+      }
+      matrix.setCursor(cursorxtop,0);
+      matrix.show();
+      matrix.print(F("4534 4534"));
+      matrix.setTextColor(matrix.Color(255,0,0));
+      cursorxbot = cursorxbot - .15;
+      if(cursorxbot < -163){
+         cursorxbot = 0;
+      }
+      matrix.setCursor(cursorxbot,7);
+      matrix.show();
     }
-    
   }
 }
