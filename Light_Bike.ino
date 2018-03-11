@@ -115,7 +115,7 @@ if(random(1, 20) == 1)
       xp1 = xp1 + spood;
       break;
   }
-  if(analogRead(A0) == 1022 && dirp1 != 3)
+  if(analogRead(A4) == 1022 && dirp1 != 3)
   {
     timeout = 500;
     dirp1 = 2;
