@@ -80,22 +80,22 @@ if(random(1, 20) == 1)
     }
   }
 //Controls
-  if(digitalRead(2) == false && dirp1 != 3)
+  if(digitalRead(2) == false && dirp2 != 3)
   {
     timeout = 500;
     dirp2 = 2;
   }
-  if(digitalRead(3) == false && dirp1 != 4)
+  if(digitalRead(3) == false && dirp2 != 4)
   {
     timeout = 500;
     dirp2 = 1;
   }
-  if(digitalRead(4) == false && dirp1 != 2)
+  if(digitalRead(4) == false && dirp2 != 2)
   {
     timeout = 500;
     dirp2 = 3;
   }
-  if(digitalRead(5) == false && dirp1 != 1)
+  if(digitalRead(5) == false && dirp2 != 1)
   {
     timeout = 500;
     dirp2 = 4;
@@ -115,7 +115,7 @@ if(random(1, 20) == 1)
       xp1 = xp1 + spood;
       break;
   }
-  if(analogRead(A0) == 1022 && dirp1 != 3)
+  if(analogRead(A4) == 1022 && dirp1 != 3)
   {
     timeout = 500;
     dirp1 = 2;
