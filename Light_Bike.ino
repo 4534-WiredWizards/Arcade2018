@@ -20,6 +20,7 @@ double framerate = 300l;
 double delaytime = 1000000/framerate;
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(9600);
   matrix.begin();
   matrix.setTextWrap(false);
   matrix.setBrightness(5);
@@ -29,11 +30,11 @@ void setup() {
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
   pinMode(6, INPUT_PULLUP);
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
-  pinMode(A2, INPUT);
-  pinMode(A3, INPUT);
-  pinMode(A4, INPUT);
+  pinMode(22, INPUT_PULLUP);
+  pinMode(24, INPUT_PULLUP);
+  pinMode(26, INPUT_PULLUP);
+  pinMode(28, INPUT_PULLUP);
+  pinMode(30, INPUT_PULLUP);
 }
 
 unsigned long loopstart = 0;
@@ -115,22 +116,23 @@ if(random(1, 20) == 1)
       xp1 = xp1 + spood;
       break;
   }
-  if(analogRead(A4) == 1022 && dirp1 != 3)
+  Serial.println(digitalRead(24));
+  if(digitalRead(30) == false && dirp1 != 3)
   {
     timeout = 500;
     dirp1 = 2;
   }
-  if(analogRead(A1) == 1022 && dirp1 != 4)
+  if(digitalRead(24) == false && dirp1 != 4)
   {
     timeout = 500;
     dirp1 = 1;
   }
-  if(analogRead(A2) == 1022 && dirp1 != 2)
+  if(digitalRead(26) == false && dirp1 != 2)
   {
     timeout = 500;
     dirp1 = 3;
   }
-  if(analogRead(A3) == 1022 && dirp1 != 1)
+  if(digitalRead(28) == false && dirp1 != 1)
   {
     timeout = 500;
     dirp1 = 4;
