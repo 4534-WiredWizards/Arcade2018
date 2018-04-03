@@ -54,6 +54,7 @@ int dirp2 = 1;
 int pixelNumberp2;
 float spood = 0.07;
 int timeout = 0;
+int tiles = 0;
 void loop() {
   //Auto mode
   if (timeout > 1) timeout--;
@@ -85,21 +86,25 @@ if(random(1, 20) == 1)
   {
     timeout = 500;
     dirp2 = 2;
+    //dirp1 = 3;
   }
   if(digitalRead(3) == false && dirp2 != 4)
   {
     timeout = 500;
     dirp2 = 1;
+    //dirp1 = 4;
   }
   if(digitalRead(4) == false && dirp2 != 2)
   {
     timeout = 500;
     dirp2 = 3;
+    //dirp1 = 2;
   }
   if(digitalRead(5) == false && dirp2 != 1)
   {
     timeout = 500;
     dirp2 = 4;
+    //dirp1 = 1;
   }
   switch(dirp1)
   {
@@ -167,6 +172,7 @@ if(random(1, 20) == 1)
   if(round(prevXp1) != round(xp1) || round(prevYp1) != round(yp1))
   {
   matrix.drawPixel(round(prevXp1), round(prevYp1),matrix.Color(255,255,0));
+  tiles++;
   }
   prevXp1 = xp1;
   prevYp1 = yp1;
@@ -179,6 +185,7 @@ if(random(1, 20) == 1)
   if(round(prevXp2) != round(xp2) || round(prevYp2) != round(yp2))
   {
   matrix.drawPixel(round(prevXp2), round(prevYp2),matrix.Color(0,0,255));
+  tiles++;
   }
   prevXp2 = xp2;
   prevYp2 = yp2;
@@ -209,6 +216,7 @@ if(random(1, 20) == 1)
     {
     matrix.fillScreen(matrix.Color(0, 0, 127));
     }
+    while(tiles > 250) {}
     matrix.show();
     delay(2000);
     reset();
@@ -229,6 +237,7 @@ if(random(1, 20) == 1)
       delay(100);
     }
     matrix.fillScreen(matrix.Color(127, 127, 0));
+    while(tiles > 250) {}
     matrix.show();
     delay(2000);
     reset();
@@ -261,4 +270,5 @@ void reset() {
   dirp2 = 3;
   pixelNumberp2;
   spood = 0.07;
+  tiles = 0;
 }
