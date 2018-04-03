@@ -11,11 +11,11 @@
 #define ONE_RIGHT 3
 #define ONE_DOWN 2
 #define ONE_FIRE 6
-#define TWO_LEFT 3
-#define TWO_UP 2
-#define TWO_RIGHT 1
-#define TWO_DOWN 4
-#define TWO_FIRE 0
+#define TWO_LEFT 28
+#define TWO_UP 26
+#define TWO_RIGHT 24
+#define TWO_DOWN 30
+#define TWO_FIRE 22
 #define RESTART 7
 #define SELECT_GAME 8
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(16, 16, PIN,
@@ -39,6 +39,11 @@ void setup() {
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
   pinMode(7, INPUT_PULLUP);
+  pinMode(22, INPUT_PULLUP);
+  pinMode(24, INPUT_PULLUP);
+  pinMode(26, INPUT_PULLUP);
+  pinMode(28, INPUT_PULLUP);
+  pinMode(30, INPUT_PULLUP);
 }
 int w = matrix.width();
 double cursorxtop = matrix.width();
@@ -89,22 +94,22 @@ void loop() {
       ballx = ballx + ballxmovement;
       bally = bally + ballymovement;
 //      matrix.drawPixel(ballx,bally,matrix.Color(0,255,0));
-      if(ballx < 0 && (abs((p1+2) - bally)) <= 2){
+      if(ballx < 0 && (abs((p1) - bally)) <= 2){
         ballxmovement = -ballxmovement;
         if(ballymovement < 0){
-          ballymovement = ballmaxychange*((-(p1+2) + bally)/2.0);
+          ballymovement = ballmaxychange*((-(p1) + bally)/2.0);
         }else{
-          ballymovement = ballmaxychange*((+(p1+2) - bally)/2.0);
+          ballymovement = ballmaxychange*((+(p1) - bally)/2.0);
         }
       } else if(ballx < 0){
         gameover = true;
         
-      } else if(ballx > 15 && (abs((p2+2) - bally)) <= 2){
+      } else if(ballx > 15 && (abs((p2) - bally)) <= 2){
         ballxmovement = -ballxmovement;
         if(ballymovement < 0){
-          ballymovement = ballmaxychange*(((p1+2) - bally)/2.0);
+          ballymovement = ballmaxychange*(((p1) - bally)/2.0);
         }else{
-          ballymovement = ballmaxychange*((-(p1+2) + bally)/2.0);
+          ballymovement = ballmaxychange*((-(p1) + bally)/2.0);
         }
       }else if(ballx > 15){
         gameover = true;
@@ -124,23 +129,23 @@ void loop() {
         matrix.drawPixel(x,y,matrix.Color(255*AA,255*AA,255*AA));
       }
     }
-    if( digitalRead(ONE_DOWN) == false && p1 < 12){
+    if( digitalRead(ONE_DOWN) == false && p1 < 14){
       p1 = p1+.4;
-    }else if( digitalRead(ONE_UP) == false && p1 > 0){
+    }else if( digitalRead(ONE_UP) == false && p1 > 2){
       p1 = p1-.4;
     }
     //matrix.drawFastVLine(0,p1,4,colors[0]);
-    if( analogRead(TWO_DOWN) == 0 && p2 < 12){
+    if(digitalRead(TWO_DOWN) == false && p2 < 14){
       p2 = p2+.4;
-    }else if( analogRead(TWO_UP) == 0 && p2 > 0){
+    }else if(digitalRead(TWO_UP) == false && p2 > 2){
       p2 = p2-.4;
     }
     //matrix.drawFastVLine(15,p2,4,colors[0]);
     for(int i = 0; i < 8; i++){
       if(i <= 3){
-        matrix.drawPixel(0,p1+i,matrix.Color(255,255,255));
+        matrix.drawPixel(0,p1+i-2,matrix.Color(255,255,255));
       }else{
-        matrix.drawPixel(15,p2+(i-4),matrix.Color(255,255,255));
+        matrix.drawPixel(15,p2+(i-4)-2,matrix.Color(255,255,255));
       }
     }
 //    Serial.println((delaytime - (micros() - loopstart)));
@@ -149,8 +154,11 @@ void loop() {
       delayMicroseconds(delaytime - (micros() - loopstart));
     }
     matrix.show();
+    +
+
+    
   }else{
-    if(digitalRead(7) == false){
+    if(false == false){
       gameover = false;
       ballx = 7;
       bally = 7;
@@ -188,3 +196,8 @@ void loop() {
     }
   }
 }
+//Worst Me-Me of all time:
+//someeee
+//body once toucha 
+//my sphaget
+//i aint the sharpest tool in the shed
