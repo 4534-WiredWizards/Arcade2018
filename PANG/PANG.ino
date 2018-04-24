@@ -16,7 +16,7 @@
 #define TWO_RIGHT 24
 #define TWO_DOWN 30
 #define TWO_FIRE 22
-#define RESTART 7
+#define RESTART 10
 #define SELECT_GAME 8
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(16, 16, PIN,
   NEO_MATRIX_TOP     + NEO_MATRIX_LEFT +
@@ -38,7 +38,8 @@ void setup() {
   pinMode(3, INPUT_PULLUP);
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
-  pinMode(7, INPUT_PULLUP);
+  pinMode(RESTART, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
   pinMode(22, INPUT_PULLUP);
   pinMode(24, INPUT_PULLUP);
   pinMode(26, INPUT_PULLUP);
@@ -73,15 +74,15 @@ void loop() {
 //  Serial.println("one fire");
 //  Serial.println(digitalRead(ONE_FIRE));
 //  Serial.println("two up");
-//  Serial.println(analogRead(TWO_UP));
+//  Serial.println(digitalRead(TWO_UP));
 //  Serial.println("two left");
-//  Serial.println(analogRead(TWO_LEFT));
+//  Serial.println(digitalRead(TWO_LEFT));
 //  Serial.println("two down");
-//  Serial.println(analogRead(TWO_DOWN));
+//  Serial.println(digitalRead(TWO_DOWN));
 //  Serial.println("two right");
-//  Serial.println(analogRead(TWO_RIGHT));
+//  Serial.println(digitalRead(TWO_RIGHT));
 //  Serial.println("two fire");
-//  Serial.println(analogRead(TWO_FIRE));
+//  Serial.println(digitalRead(TWO_FIRE));
 //  Serial.println("restart");
 //  Serial.println(digitalRead(RESTART));
 //  Serial.println("select game");
@@ -154,11 +155,11 @@ void loop() {
       delayMicroseconds(delaytime - (micros() - loopstart));
     }
     matrix.show();
-    +
+    
 
     
   }else{
-    if(false == false){
+    if(digitalRead(RESTART) == false){
       gameover = false;
       ballx = 7;
       bally = 7;
